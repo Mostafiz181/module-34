@@ -1,5 +1,8 @@
-const loadMeal = () => {
-    fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=fish')
+const loadMeal = (searchText) => {
+
+    const url = `https://www.themealdb.com/api/json/v1/1/search.php?s= ${searchText}`
+    console.log(url)
+    fetch(url)
         .then(res => res.json())
         .then(data => showMeal(data.meals))
 }
@@ -7,6 +10,7 @@ const loadMeal = () => {
 const showMeal = meals => {
     // console.log(meals);
     const mealContainer = document.getElementById('meal-container');
+    mealContainer.innerText = '';
     meals.forEach(meals => {
         console.log(meals);
         const mealDiv = document.createElement('div');
@@ -14,9 +18,9 @@ const showMeal = meals => {
         mealDiv.innerHTML = `
         
         <div class="card">
-        <img src="..." class="card-img-top" alt="...">
+        <img src="${meals.strMealThumb}" class="card-img-top" alt="...">
         <div class="card-body">
-          <h5 class="card-title">Card title</h5>
+          <h5 class="card-title">${meals.strMeal}</h5>
           <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
         </div>
       </div>
@@ -27,4 +31,12 @@ const showMeal = meals => {
     })
 }
 
-loadMeal();
+
+const searchMeals =()=>{
+    const searchText = document.getElementById('search-field').value;
+    console.log(searchText);
+    loadMeal(searchText)
+    
+}
+
+loadMeal('rice');
